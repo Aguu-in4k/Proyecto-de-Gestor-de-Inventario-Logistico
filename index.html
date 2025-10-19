@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Inventarios - Depot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📦 GESTOR DE INVENTARIOS</h1>
+            <p>Sistema de control para depósito y logística</p>
+        </header>
+
+        <!-- Dashboard de Métricas -->
+        <div class="dashboard">
+            <div class="metric-card">
+                <div class="metric-icon">📦</div>
+                <div class="metric-info">
+                    <h3>Total Productos</h3>
+                    <span id="totalProducts">0</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">⚠️</div>
+                <div class="metric-info">
+                    <h3>Stock Bajo</h3>
+                    <span id="lowStockCount">0</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">📊</div>
+                <div class="metric-info">
+                    <h3>Valor Total</h3>
+                    <span id="totalValue">$0</span>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon">🔄</div>
+                <div class="metric-info">
+                    <h3>Movimientos Hoy</h3>
+                    <span id="todayMovements">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Acciones Rápidas -->
+        <div class="quick-actions">
+            <button class="quick-action-btn primary" onclick="quickAction('addproduct')">
+                ➕ Agregar Producto
+            </button>
+            <button class="quick-action-btn warning" onclick="quickAction('lowstock')">
+                📉 Ver Stock Bajo
+            </button>
+            <button class="quick-action-btn" onclick="quickAction('export')">
+                📊 Exportar Reporte
+            </button>
+            <button class="quick-action-btn" onclick="quickAction('reports')">
+                📋 Reportes
+            </button>
+        </div>
+
+        <!-- Gráfico de Stock Bajo -->
+        <div class="card full-width">
+            <h2>📈 Alertas de Stock Crítico</h2>
+            <div id="stockChart" class="stock-chart">
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Formulario para agregar productos -->
+            <div class="card">
+                <h2>Agregar Producto</h2>
+                <form id="productForm">
+                    <input type="text" id="productName" placeholder="Nombre del producto" required>
+                    <input type="text" id="productSku" placeholder="SKU/Código" required>
+                    <input type="number" id="productStock" placeholder="Stock inicial" required>
+                    <input type="text" id="productLocation" placeholder="Ubicación en depósito">
+                    <input type="number" id="productMinStock" placeholder="Stock mínimo">
+                    <input type="number" id="productPrice" placeholder="Precio costo ($)" step="0.01">
+                    <button type="submit">Agregar Producto</button>
+                </form>
+            </div>
+
+            <!-- Lista de productos -->
+            <div class="card">
+                <h2>Inventario Actual 
+                    <small style="font-size: 0.7em; color: #718096; margin-left: 10px;">
+                        (<span id="productCount">0</span> productos)
+                    </small>
+                </h2>
+                <div class="filters">
+                    <input type="text" id="searchInput" placeholder="Buscar producto...">
+                    <button onclick="filterLowStock()">Stock Bajo</button>
+                    <button onclick="renderProducts()">Todos</button>
+                    <button onclick="clearAllProducts()" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                        🗑️ Limpiar Todo
+                    </button>
+                </div>
+                <div id="productList" class="product-list">
+                </div>
+            </div>
+
+            <!-- Movimientos -->
+            <div class="card">
+                <h2>Movimientos Recientes</h2>
+                <div class="movement-controls">
+                    <select id="productSelect">
+                        <option value="">Seleccionar producto</option>
+                    </select>
+                    <input type="number" id="movementQty" placeholder="Cantidad">
+                    <select id="movementType">
+                        <option value="entrada">Entrada</option>
+                        <option value="salida">Salida</option>
+                    </select>
+                    <input type="text" id="movementDesc" placeholder="Descripción">
+                    <button onclick="addMovement()">Registrar Movimiento</button>
+                </div>
+                <div id="movementList" class="movement-list">
+                </div>
+            </div>
+        </div>
+
+        <!-- Selector de Tema -->
+        <div class="theme-switcher">
+            <button onclick="toggleTheme()">🌙 Cambiar Tema</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
